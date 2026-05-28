@@ -213,7 +213,7 @@ export default function RecordDetailPage() {
               <Field label="GHG Scope" value={`Scope ${record.ghg_scope}`} />
               <Field label="Source" value={record.source_type} />
               <Field label="Run ID" value={`#${record.run_id}`} />
-              <Field label="Original Value" value={`${record.original_value} ${record.original_unit}`} />
+              <Field label="Original Value" value={`${Number(record.original_value).toLocaleString(undefined, { maximumFractionDigits: 3 })} ${record.original_unit}`} />
               <Field label="CO₂e (kg)" value={Number(record.normalized_value).toFixed(4)} />
               <Field label="Emission Factor" value={record.emission_factor_used} />
               <Field label="Factor Source" value={record.emission_factor_source} />

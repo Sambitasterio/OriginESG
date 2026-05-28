@@ -267,7 +267,7 @@ export default function ReviewPage() {
                       </td>
                       <td className="px-4 py-3 text-[#4b5b47]">{SOURCE_LABEL[rec.source_type] ?? rec.source_type}</td>
                       <td className="px-4 py-3 text-[#4b5b47]">{SCOPE_LABEL[rec.ghg_scope]}</td>
-                      <td className="px-4 py-3 text-[#4b5b47] text-xs">{rec.original_value} {rec.original_unit}</td>
+                      <td className="px-4 py-3 text-[#4b5b47] text-xs">{Number(rec.original_value).toLocaleString(undefined, { maximumFractionDigits: 3 })} {rec.original_unit}</td>
                       <td className="px-4 py-3 font-medium text-[#1f2a1d]">{Number(rec.normalized_value).toFixed(2)}</td>
                       <td className="px-4 py-3 text-[#7a8f76] text-xs">
                         {rec.period_start ? new Date(rec.period_start).toLocaleDateString() : '—'}

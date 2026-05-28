@@ -35,6 +35,61 @@ TO_KWH = {
     "GWH":  1_000_000.0,
 }
 
+# ── Travel emission factors (DEFRA 2023) ─────────────────────────────────────
+
+# Flights: kg CO2e per passenger per km (includes radiative forcing at 1.891×)
+# ClassOfService codes: Y/M/S/H/Q/K = Economy, W/B = Premium Economy,
+#                       C/D/J/Z = Business, F/A/P = First
+# Source: DEFRA 2023 GHG Conversion Factors — Passenger flights
+FLIGHT_EMISSION_FACTOR_KG_PER_PKM = 0.19085   # economy long-haul base
+FLIGHT_CABIN_MULTIPLIERS = {
+    "ECONOMY":          1.0,
+    "PREMIUM_ECONOMY":  1.6,
+    "BUSINESS":         2.9,
+    "FIRST":            4.0,
+}
+# Map Concur ClassOfService single-letter codes → cabin category
+CONCUR_CLASS_MAP = {
+    "Y": "ECONOMY", "M": "ECONOMY", "S": "ECONOMY", "H": "ECONOMY",
+    "Q": "ECONOMY", "K": "ECONOMY", "L": "ECONOMY", "U": "ECONOMY",
+    "W": "PREMIUM_ECONOMY", "B": "PREMIUM_ECONOMY",
+    "C": "BUSINESS", "D": "BUSINESS", "J": "BUSINESS", "Z": "BUSINESS",
+    "F": "FIRST", "A": "FIRST", "P": "FIRST",
+}
+DEFAULT_CABIN_CLASS = "ECONOMY"   # fallback when ClassOfService is missing
+
+TRAVEL_EMISSION_FACTOR_SOURCE = "DEFRA_2023"
+
+# Hotels: kg CO2e per room per night (DEFRA 2023 UK average)
+HOTEL_EMISSION_FACTOR_KG_PER_NIGHT = 20.8
+
+# Cars: kg CO2e per rental day (assumes ~100 km/day × 0.17 kg CO2e/km average car)
+CAR_EMISSION_FACTOR_KG_PER_DAY = 17.0
+
+# Airport coordinates for great-circle distance — (lat, lon) in decimal degrees
+# Source: OpenFlights.org airport database
+AIRPORT_COORDS = {
+    "DEL": (28.5665, 77.1031),   # Indira Gandhi International, Delhi
+    "BOM": (19.0896, 72.8656),   # Chhatrapati Shivaji, Mumbai
+    "LHR": (51.4775, -0.4614),   # Heathrow, London
+    "LGW": (51.1537, -0.1821),   # Gatwick, London
+    "JFK": (40.6413, -73.7781),  # John F. Kennedy, New York
+    "EWR": (40.6895, -74.1745),  # Newark, New York
+    "CDG": (49.0097,  2.5478),   # Charles de Gaulle, Paris
+    "DXB": (25.2532, 55.3657),   # Dubai International
+    "SIN": ( 1.3644, 103.9915),  # Changi, Singapore
+    "HKG": (22.3080, 113.9185),  # Hong Kong International
+    "SYD": (-33.9461, 151.1772), # Kingsford Smith, Sydney
+    "LAX": (33.9425, -118.4081), # Los Angeles International
+    "ORD": (41.9742, -87.9073),  # O'Hare, Chicago
+    "ATL": (33.6407, -84.4277),  # Hartsfield-Jackson, Atlanta
+    "BLR": (13.1979,  77.7063),  # Kempegowda, Bengaluru
+    "HYD": (17.2403,  78.4294),  # Rajiv Gandhi, Hyderabad
+    "MAA": (12.9941,  80.1709),  # Chennai International
+    "CCU": (22.6547,  88.4467),  # Netaji Subhas, Kolkata
+    "AMD": (23.0772,  72.6347),  # Sardar Vallabhbhai Patel, Ahmedabad
+}
+
 # Unit → litres conversion factors
 # SAP OrderQuantityUnit values vary; map common ones to litres
 TO_LITRES = {

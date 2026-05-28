@@ -5,11 +5,13 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from ingestion.views import IngestionRunViewSet, IngestSAPView, IngestTravelView, IngestUtilityView
+from organizations.views import DataSourceViewSet
 from review.views import NormalizedRecordViewSet
 
 router = DefaultRouter()
 router.register(r"records", NormalizedRecordViewSet, basename="record")
 router.register(r"runs", IngestionRunViewSet, basename="run")
+router.register(r"datasources", DataSourceViewSet, basename="datasource")
 
 urlpatterns = [
     path("admin/", admin.site.urls),

@@ -8,7 +8,6 @@ import {
   ingestSAP,
   ingestUtility,
   ingestTravel,
-  DataSource,
   IngestionRun,
   IngestResult,
 } from '../api/endpoints';
@@ -37,41 +36,6 @@ function ResultBanner({ result }: { result: IngestResult }) {
   );
 }
 
-function SourceSelector({
-  sources,
-  sourceType,
-  value,
-  onChange,
-}: {
-  sources: DataSource[];
-  sourceType: string;
-  value: string;
-  onChange: (v: string) => void;
-}) {
-  const filtered = sources.filter((s) => s.source_type === sourceType);
-  if (filtered.length === 0)
-    return (
-      <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
-        No active {sourceType} data source found. Create one in{' '}
-        <a href="/admin/organizations/datasource/add/" target="_blank" className="underline">
-          Django admin
-        </a>.
-      </p>
-    );
-  return (
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      className="w-full border border-[#dde5db] rounded-lg px-3 py-2 text-sm text-[#1f2a1d] focus:outline-none focus:ring-2 focus:ring-[#336443]/30 focus:border-[#336443] transition-colors"
-    >
-      <option value="">Select data source…</option>
-      {filtered.map((s) => (
-        <option key={s.id} value={s.id}>{s.name} ({s.organization_name})</option>
-      ))}
-    </select>
-  );
-}
-
 function SectionCard({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="bg-white rounded-xl border border-[#e8ede6] p-6">
@@ -82,32 +46,40 @@ function SectionCard({ title, children }: { title: string; children: React.React
 }
 
 export default function IngestPage() {
-  const [sources, setSources] = useState<DataSource[]>([]);
   const [runs, setRuns] = useState<IngestionRun[]>([]);
 
-  // SAP state
+  // Source IDs — auto-resolved on mount, never shown to user
   const [sapSourceId, setSapSourceId] = useState('');
+  const [utilSourceId, setUtilSourceId] = useState('');
+  const [travelSourceId, setTravelSourceId] = useState('');
+
+  // SAP state
   const [sapJson, setSapJson] = useState('');
   const [sapLoading, setSapLoading] = useState(false);
   const [sapResult, setSapResult] = useState<IngestResult | null>(null);
   const [sapError, setSapError] = useState('');
 
   // Utility state
-  const [utilSourceId, setUtilSourceId] = useState('');
   const [utilFile, setUtilFile] = useState<File | null>(null);
   const [utilLoading, setUtilLoading] = useState(false);
   const [utilResult, setUtilResult] = useState<IngestResult | null>(null);
   const [utilError, setUtilError] = useState('');
 
   // Travel state
-  const [travelSourceId, setTravelSourceId] = useState('');
   const [travelJson, setTravelJson] = useState('');
   const [travelLoading, setTravelLoading] = useState(false);
   const [travelResult, setTravelResult] = useState<IngestResult | null>(null);
   const [travelError, setTravelError] = useState('');
 
   useEffect(() => {
-    fetchDataSources().then(setSources).catch(() => {});
+    fetchDataSources().then((data) => {
+      const sap = data.find((s) => s.source_type === 'SAP');
+      const util = data.find((s) => s.source_type === 'UTILITY');
+      const travel = data.find((s) => s.source_type === 'TRAVEL');
+      if (sap) setSapSourceId(String(sap.id));
+      if (util) setUtilSourceId(String(util.id));
+      if (travel) setTravelSourceId(String(travel.id));
+    }).catch(() => {});
     fetchRuns().then(setRuns).catch(() => {});
   }, []);
 
@@ -119,7 +91,7 @@ export default function IngestPage() {
       const msg = err.response?.data?.error;
       if (msg) return msg;
       if (err.response?.status === 409) return 'Duplicate file — this CSV has already been ingested.';
-      if (err.response?.status === 404) return 'Data source not found. Make sure you selected a source and it is active.';
+      if (err.response?.status === 404) return 'Data source not found.';
       if (err.response?.status === 401) return 'Not authenticated. Please log in again.';
     }
     return 'Request failed. Check the browser console for details.';
@@ -142,7 +114,6 @@ export default function IngestPage() {
     e.preventDefault();
     setUtilError(''); setUtilResult(null);
     if (!utilFile) { setUtilError('Please select a CSV file.'); return; }
-    if (!utilSourceId) { setUtilError('Please select a data source.'); return; }
     setUtilLoading(true);
     try {
       const result = await ingestUtility(Number(utilSourceId), utilFile);
@@ -202,8 +173,6 @@ export default function IngestPage() {
           {/* SAP */}
           <SectionCard title="SAP OData — Scope 1">
             <form onSubmit={handleSAP} className="flex flex-col gap-3">
-              {fieldLabel('Data source')}
-              <SourceSelector sources={sources} sourceType="SAP" value={sapSourceId} onChange={setSapSourceId} />
               {fieldLabel('OData V4 JSON payload')}
               <textarea
                 value={sapJson}
@@ -221,8 +190,6 @@ export default function IngestPage() {
           {/* Utility */}
           <SectionCard title="Utility CSV — Scope 2">
             <form onSubmit={handleUtility} className="flex flex-col gap-3">
-              {fieldLabel('Data source')}
-              <SourceSelector sources={sources} sourceType="UTILITY" value={utilSourceId} onChange={setUtilSourceId} />
               {fieldLabel('Green Button CSV file')}
               <label className="flex flex-col items-center justify-center border-2 border-dashed border-[#dde5db] rounded-lg px-4 py-6 cursor-pointer hover:border-[#336443] transition-colors">
                 <Upload className="w-6 h-6 text-[#7a8f76] mb-2" />
@@ -245,8 +212,6 @@ export default function IngestPage() {
           {/* Travel */}
           <SectionCard title="Concur Travel — Scope 3">
             <form onSubmit={handleTravel} className="flex flex-col gap-3">
-              {fieldLabel('Data source')}
-              <SourceSelector sources={sources} sourceType="TRAVEL" value={travelSourceId} onChange={setTravelSourceId} />
               {fieldLabel('Concur Itinerary JSON payload')}
               <textarea
                 value={travelJson}

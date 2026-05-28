@@ -1,0 +1,69 @@
+{
+  "Itineraries": [
+    {
+      "TripId": "TRP001",
+      "TripName": "Mumbai Business Trip",
+      "Segments": [
+        {
+          "Type": "Air",
+          "StartCityCode": "DEL",
+          "EndCityCode": "BOM",
+          "ClassOfService": "Y",
+          "Vendor": "AI",
+          "StartDateLocal": "2024-02-15T10:30:00"
+        },
+        {
+          "Type": "Hotel",
+          "Name": "Taj Mahal Palace",
+          "StartDateLocal": "2024-02-15",
+          "EndDateLocal": "2024-02-17",
+          "DailyRate": 250.0
+        },
+        {
+          "Type": "Car",
+          "PickupDeliveryCity": "BOM",
+          "DropoffCollectionCity": "BOM",
+          "Body": "Compact",
+          "Class": "CCAR",
+          "StartDateLocal": "2024-02-15",
+          "EndDateLocal": "2024-02-17"
+        }
+      ]
+    },
+    {
+      "TripId": "TRP002",
+      "TripName": "London Conference",
+      "Segments": [
+        {
+          "Type": "Air",
+          "StartCityCode": "BOM",
+          "EndCityCode": "LHR",
+          "ClassOfService": "C",
+          "Vendor": "BA",
+          "StartDateLocal": "2024-03-10T23:15:00"
+        },
+        {
+          "Type": "Hotel",
+          "Name": "The Grosvenor Hotel",
+          "StartDateLocal": "2024-03-11",
+          "EndDateLocal": "2024-03-14",
+          "DailyRate": 310.0
+        }
+      ]
+    },
+    {
+      "TripId": "TRP003",
+      "TripName": "New York Client Visit",
+      "Segments": [
+        {
+          "Type": "Air",
+          "StartCityCode": "LHR",
+          "EndCityCode": "JFK",
+          "ClassOfService": "",
+          "Vendor": "VS",
+          "StartDateLocal": "2024-03-20T11:00:00"
+        }
+      ]
+    }
+  ]
+}

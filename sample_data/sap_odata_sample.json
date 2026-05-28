@@ -1,0 +1,125 @@
+{
+  "@odata.context": "$metadata#A_PurchaseOrderItem",
+  "value": [
+    {
+      "PurchaseOrder": "4500012001",
+      "PurchaseOrderItem": "00010",
+      "Material": "DIESEL",
+      "Plant": "PLANT_MH01",
+      "OrderQuantity": "500.000",
+      "OrderQuantityUnit": "L",
+      "DocumentDate": "2024-01-15",
+      "Supplier": "VENDOR_HPCL"
+    },
+    {
+      "PurchaseOrder": "4500012002",
+      "PurchaseOrderItem": "00010",
+      "Material": "PETROL",
+      "Plant": "PLANT_DL02",
+      "OrderQuantity": "300.000",
+      "OrderQuantityUnit": "L",
+      "DocumentDate": "2024-01-18",
+      "Supplier": "VENDOR_BPCL"
+    },
+    {
+      "PurchaseOrder": "4500012003",
+      "PurchaseOrderItem": "00010",
+      "Material": "HSD",
+      "Plant": "PLANT_MH01",
+      "OrderQuantity": "150.000",
+      "OrderQuantityUnit": "GAL",
+      "DocumentDate": "2024-01-22",
+      "Supplier": "VENDOR_HPCL"
+    },
+    {
+      "PurchaseOrder": "4500012004",
+      "PurchaseOrderItem": "00010",
+      "Material": "DIESEL",
+      "Plant": "PLANT_BLR03",
+      "OrderQuantity": "1000.000",
+      "OrderQuantityUnit": "L",
+      "DocumentDate": "2024-02-01",
+      "Supplier": "VENDOR_IOC"
+    },
+    {
+      "PurchaseOrder": "4500012005",
+      "PurchaseOrderItem": "00010",
+      "Material": "LDO",
+      "Plant": "PLANT_DL02",
+      "OrderQuantity": "200.000",
+      "OrderQuantityUnit": "LTR",
+      "DocumentDate": "2024-02-05",
+      "Supplier": "VENDOR_BPCL"
+    },
+    {
+      "PurchaseOrder": "4500012006",
+      "PurchaseOrderItem": "00010",
+      "Material": "FURNACE_OIL",
+      "Plant": "PLANT_MH01",
+      "OrderQuantity": "500.000",
+      "OrderQuantityUnit": "L",
+      "DocumentDate": "2024-02-10",
+      "Supplier": "VENDOR_HPCL"
+    },
+    {
+      "PurchaseOrder": "4500012007",
+      "PurchaseOrderItem": "00010",
+      "Material": "PETROL",
+      "Plant": "PLANT_BLR03",
+      "OrderQuantity": "75.000",
+      "OrderQuantityUnit": "GAL",
+      "DocumentDate": "2024-02-14",
+      "Supplier": "VENDOR_IOC"
+    },
+    {
+      "PurchaseOrder": "4500012008",
+      "PurchaseOrderItem": "00010",
+      "Material": "DIESEL",
+      "Plant": "PLANT_DL02",
+      "OrderQuantity": "0.800",
+      "OrderQuantityUnit": "KL",
+      "DocumentDate": "2024-02-20",
+      "Supplier": "VENDOR_HPCL"
+    },
+    {
+      "PurchaseOrder": "4500012009",
+      "PurchaseOrderItem": "00010",
+      "Material": "DIESEL",
+      "Plant": "PLANT_MH01",
+      "OrderQuantity": "45.000",
+      "OrderQuantityUnit": "KG",
+      "DocumentDate": "2024-03-01",
+      "Supplier": "VENDOR_IOC"
+    },
+    {
+      "PurchaseOrder": "4500012010",
+      "PurchaseOrderItem": "00010",
+      "Material": "UNLEADED",
+      "Plant": "PLANT_BLR03",
+      "OrderQuantity": "120.000",
+      "OrderQuantityUnit": "L",
+      "DocumentDate": "2024-03-05",
+      "Supplier": "VENDOR_BPCL"
+    },
+    {
+      "PurchaseOrder": "4500012011",
+      "PurchaseOrderItem": "00010",
+      "Material": "DIESEL",
+      "Plant": "PLANT_MH01",
+      "OrderQuantity": "300.000",
+      "OrderQuantityUnit": "",
+      "DocumentDate": "2024-03-10",
+      "Supplier": "VENDOR_HPCL"
+    },
+    {
+      "PurchaseOrder": "4500012012",
+      "PurchaseOrderItem": "00010",
+      "Material": "PETROL",
+      "Plant": "PLANT_DL02",
+      "OrderQuantity": "250.000",
+      "OrderQuantityUnit": "",
+      "DocumentDate": "2024-03-12",
+      "Supplier": "VENDOR_BPCL"
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 import { useState, FormEvent } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Sparkles } from 'lucide-react';
@@ -19,8 +20,18 @@ export default function LoginPage() {
     try {
       await login(username, password);
       navigate('/', { replace: true });
-    } catch {
-      setError('Invalid username or password.');
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        if (err.response?.status === 401 || err.response?.status === 400) {
+          setError('Invalid username or password.');
+        } else if (err.response) {
+          setError(`Server error ${err.response.status}: ${JSON.stringify(err.response.data)}`);
+        } else {
+          setError(`Network error — could not reach the server. (${err.message})`);
+        }
+      } else {
+        setError('Unexpected error. Check the browser console.');
+      }
     } finally {
       setLoading(false);
     }

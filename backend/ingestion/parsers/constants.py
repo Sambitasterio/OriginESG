@@ -11,6 +11,30 @@ DEFRA_2023 = {
 
 EMISSION_FACTOR_SOURCE = "DEFRA_2023"
 
+# EPA eGRID 2023 emission factors — kg CO2e per kWh of electricity
+# Source: US EPA eGRID 2023 (https://www.epa.gov/egrid)
+# Key: grid region subregion code. Use "US_AVG" when region is unknown.
+EGRID_2023 = {
+    "US_AVG":   0.3861,   # US national average
+    "WECC":     0.2710,   # Western US
+    "RFC":      0.3617,   # Mid-Atlantic / Great Lakes
+    "SERC":     0.4012,   # Southeast US
+    "TRE":      0.3988,   # Texas (ERCOT)
+    "NPCC":     0.2185,   # Northeast US / New England
+    # India CEA 2023 — included because SAP plants are India-based
+    "IN_CEA":   0.7160,   # India Central Electricity Authority 2023
+}
+
+EGRID_EMISSION_FACTOR_SOURCE = "EPA_EGRID_2023"
+DEFAULT_GRID_REGION = "US_AVG"
+
+# Utility unit → kWh conversion factors
+TO_KWH = {
+    "KWH":  1.0,
+    "MWH":  1000.0,
+    "GWH":  1_000_000.0,
+}
+
 # Unit → litres conversion factors
 # SAP OrderQuantityUnit values vary; map common ones to litres
 TO_LITRES = {

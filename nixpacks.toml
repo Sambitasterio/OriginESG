@@ -1,5 +1,2 @@
-[phases.build]
-cmds = ["cd backend && python manage.py collectstatic --noinput"]
-
 [start]
-cmd = "cd backend && python manage.py migrate --noinput && gunicorn breathe_esg.wsgi --bind 0.0.0.0:$PORT --workers 2 --log-file -"
+cmd = "cd backend && python manage.py collectstatic --noinput && python manage.py migrate --noinput && gunicorn breathe_esg.wsgi --bind 0.0.0.0:$PORT --workers 2 --log-file -"

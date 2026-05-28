@@ -3,6 +3,9 @@
 PROJECT_PLAN.md
 Breathe_ESG_Tech_Intern_Assignment.pdf
 
+# ── Django collected static ───────────────────────────────────────────────────
+backend/staticfiles/
+
 # ── Python / Django ───────────────────────────────────────────────────────────
 venv/
 __pycache__/

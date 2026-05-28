@@ -1,4 +1,5 @@
 import { useEffect, useState, FormEvent } from 'react';
+import axios from 'axios';
 import { CheckCircle, XCircle, Upload, Play } from 'lucide-react';
 import Layout from '../components/Layout';
 import {
@@ -112,6 +113,18 @@ export default function IngestPage() {
 
   const refreshRuns = () => fetchRuns().then(setRuns).catch(() => {});
 
+  const apiError = (err: unknown): string => {
+    if (err instanceof SyntaxError) return 'Invalid JSON.';
+    if (axios.isAxiosError(err)) {
+      const msg = err.response?.data?.error;
+      if (msg) return msg;
+      if (err.response?.status === 409) return 'Duplicate file — this CSV has already been ingested.';
+      if (err.response?.status === 404) return 'Data source not found. Make sure you selected a source and it is active.';
+      if (err.response?.status === 401) return 'Not authenticated. Please log in again.';
+    }
+    return 'Request failed. Check the browser console for details.';
+  };
+
   const handleSAP = async (e: FormEvent) => {
     e.preventDefault();
     setSapError(''); setSapResult(null); setSapLoading(true);
@@ -121,7 +134,7 @@ export default function IngestPage() {
       setSapResult(result);
       refreshRuns();
     } catch (err: unknown) {
-      setSapError(err instanceof SyntaxError ? 'Invalid JSON.' : 'Ingestion failed. Check the payload.');
+      setSapError(apiError(err));
     } finally { setSapLoading(false); }
   };
 
@@ -129,13 +142,14 @@ export default function IngestPage() {
     e.preventDefault();
     setUtilError(''); setUtilResult(null);
     if (!utilFile) { setUtilError('Please select a CSV file.'); return; }
+    if (!utilSourceId) { setUtilError('Please select a data source.'); return; }
     setUtilLoading(true);
     try {
       const result = await ingestUtility(Number(utilSourceId), utilFile);
       setUtilResult(result);
       refreshRuns();
-    } catch {
-      setUtilError('Ingestion failed. Check the CSV format.');
+    } catch (err: unknown) {
+      setUtilError(apiError(err));
     } finally { setUtilLoading(false); }
   };
 
@@ -148,7 +162,7 @@ export default function IngestPage() {
       setTravelResult(result);
       refreshRuns();
     } catch (err: unknown) {
-      setTravelError(err instanceof SyntaxError ? 'Invalid JSON.' : 'Ingestion failed. Check the payload.');
+      setTravelError(apiError(err));
     } finally { setTravelLoading(false); }
   };
 
